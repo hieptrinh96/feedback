@@ -1,22 +1,16 @@
-// Importing all required libraries
-
 import express from 'express'
-
-// import cors from 'cors'
 import cors from 'cors'
 import db from './db/db.js'
 import cookieSession from 'cookie-session'
 import passport from 'passport'
 import 'dotenv/config.js'
-
 import {router as routerAuth} from '../server/Routers/auth/passport.js'
 
-// creating our app using express
+import {app as indexRouter} from '../server/Routers/auth/index.js'
+
 const app = express()
 
-// Setting PORT
 const PORT = process.env.PORT || 5000;
-
 
 // Adding required middlewares
 app.use(cookieSession({
@@ -36,6 +30,9 @@ app.use(passport.initialize())
 app.use(passport.session());
 
 //Connectiog to MySQL Database
+//Adding Route, "/auth" is going to be perfix for all the routes which are in ./router/auth/passport
+app.use('/auth', routerAuth);
+app.use('/index', indexRouter)
 db.getConnection((err,connection) => {
     try {
         if(err) {
@@ -43,14 +40,11 @@ db.getConnection((err,connection) => {
             throw err
         }
         console.log("Connection to database is successful")
-        // connection.release()
     } catch (err) {
         console.error(err)
     }
 })
 
-//Adding Route, "/auth" is going to be perfix for all the routes which are in ./router/auth/passport
-app.use('/auth', routerAuth);
 
 // Starting our port... 
 app.listen(PORT, () =>{
