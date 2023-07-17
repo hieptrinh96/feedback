@@ -7,9 +7,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 
   const router = express()
 
-  const checkAuth = (req, res, next) => {
-    return req.user ? next() : res.status(401).json({msg: 'Not Authorized'})
-  }
+  // const checkAuth = (req, res, next) => {
+  //   return req.user ? next() : res.status(401).json({msg: 'Not Authorized'})
+  // }
 
   // Passing google authenticate method as a middleware
   router.get('/google', passport.authenticate('google', {
@@ -18,11 +18,15 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 
   router.get("/google/callback", passport.authenticate("google"), (req, res) => {
     if (req.user) {
-      // console.log("the use is", req.user); 
-      const googleAuthToken = jwt.sign({googleAuthToken: req.user.email}, "xe6rctyuvi", {expiresIn:86400000 })
+      // console.log("the use is", req); 
+      const user = [
+        req.user.displayName,
+        req.user.email
+      ]
+      const googleAuthToken = jwt.sign({googleAuthToken: user}, "xe6rctyuvi", {expiresIn:86400000 })
       res.cookie("googleAuthToken", googleAuthToken, {expires: new Date(Date.now() + 86400 * 1000), httpOnly: true})
-      res.redirect('/profile')
-      // res.redirect('http://localhost:3000/landing')
+      // res.redirect('/profile')
+      res.redirect(`http://localhost:3000/profile?token=${googleAuthToken}`)
     }
   });
 
@@ -83,4 +87,4 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
   );
 
 
-export {router, checkAuth}
+export {router}

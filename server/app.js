@@ -7,16 +7,17 @@ import 'dotenv/config.js'
 import {router as routerAuth} from '../server/Routers/auth/passport.js'
 import { router as profileRouter } from '../server/Routers/profile/profile.js'
 import {app as indexRouter} from '../server/Routers/auth/index.js'
+import session from 'express-session'
 
 const app = express()
 
 const PORT = process.env.PORT || 5000;
 
 // Adding required middlewares
-app.use(cookieSession({
-    name: 'authSession',
-    keys: ["askduhakdnkbiygvhbad7a6s*&^*S^D8asdbk"],
-    maxAge: 24*60*60*100
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
 }))
 
 // CORS - Cross Origin Resource Sharing, our Frontend will be runing on different port (3000) and our Backend will run of 5000, it so how can frontend access backend, so we need to connect it, thats the reason we are using CORS.
