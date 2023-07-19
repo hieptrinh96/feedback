@@ -1,8 +1,9 @@
 import { Router } from "express";
-import * as profileCtrl from '../../controllers/auth.js'
-// import { checkAuth } from "../auth/passport.js";
+import * as profileCtrl from '../../controllers/profile.js'
+import { checkAuth } from "../../controllers/auth.js";
+
 const router = Router()
 
-router.get('/', profileCtrl.showUser)
+router.get('/', checkAuth, profileCtrl.showUser)
 
 export { router }

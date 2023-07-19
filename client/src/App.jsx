@@ -3,9 +3,18 @@ import GoogleButton from './pages/GoogleButton.jsx';
 import Profile from './pages/Profile.jsx';
 import {Routes, Route} from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import { tester } from './services/testService';
-function App() {
+import * as profileService from './services/profileService'
 
+function App() {
+  // const [profile, setProfile] = useState(null)
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const userData = await profileService.firstQuery()
+  //     setProfile(userData)
+  //   }
+  //   fetchUser()
+  // }, [profile])
+  
   return (
     <div className="App">
       <h1>App</h1>
