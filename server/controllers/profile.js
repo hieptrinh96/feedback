@@ -10,10 +10,9 @@ const showUser = (req, res) => {
       console.log('The error from showUser function is ', err)
     }
     else {
-      return res.status(201).json({user})
+      res.status(200).json(user)
     }
   })
-  // res.status(200).json({data})
 }
 
 
