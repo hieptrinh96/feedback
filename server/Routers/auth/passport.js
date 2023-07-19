@@ -64,7 +64,6 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
         callbackURL: 'http://localhost:5000/auth/google/callback',
       },
       function (accessToken, refreshToken, user, cb) {
-        user.accessToken = accessToken
         db.query(
           "select * from users where email = ?",
           [user.email],
