@@ -64,23 +64,35 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
         callbackURL: 'http://localhost:5000/auth/google/callback',
       },
       function (accessToken, refreshToken, user, cb) {
-        db.query(
-          "select * from users where email = ?",
-          [user.email],
-          (err, results) => {
+        if (user.email.includes('atx')) {
+          db.query('select * from admins where email = ?', [user.email], (err, results) => {
+            if (err) console.log('Error found in admins query', err)
+            if (!results.length) {
+              db.query('insert into admins set name = ?, email = ?', [user.displayName, user.email], (err, userAdded) => {
+                if (err) console.log('Error found in adding user to admins table', err)
+                else {
+                  console.log(`${userAdded} was added to the admins table`)
+                  cb(null, userAdded)
+                }
+              })
+            }
+          })
+        }
+        else if (user.email.includes('mil')) {
+          db.query("select * from users where email = ?", [user.email], (err, results) => {
             if (err) console.log('error found in query', err)
             if (!results.length) {
               db.query('insert into users set name = ?, email = ?', [user.displayName, user.email], (err, userAdded) => {
                 if (err) console.log('error in adding user ', err)
-                else {
-                  console.log(`${user} was added`)
-                  cb(null, user)
-                }
+                  else {
+                    console.log(`${user} was added`)
+                    cb(null, user)
+                  }
               })
             }
             cb(null, user)
-          }
-        )
+          })
+        }
       }
     )
   );

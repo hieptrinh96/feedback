@@ -21,6 +21,7 @@
     "nodemon": "^1.14.9",
     "passport": "^0.5.3",
     "passport-google-oauth2": "^0.2.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "xlsx": "^0.18.5"
   }
 }
