@@ -1,6 +1,7 @@
 import './App.css';
 import GoogleButton from './pages/GoogleButton.jsx';
 import Profile from './pages/Profile.jsx';
+import Teams from './pages/Teams';
 import {Routes, Route} from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { fetchUser } from './services/profileService';

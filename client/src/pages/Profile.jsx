@@ -1,3 +1,4 @@
+import Teams from "./Teams";
 const Profile = ({profile}) => {
   return (
     <div>
@@ -10,6 +11,7 @@ const Profile = ({profile}) => {
           :
           <div>Loading</div>
       }
+      <Teams />
     </div>
   );
 }
