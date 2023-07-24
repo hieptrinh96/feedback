@@ -76,13 +76,14 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
                 }
               })
             }
+            cb(null, user)
           })
         }
         else if (user.email.includes('mil')) {
-          db.query("select * from users where email = ?", [user.email], (err, results) => {
+          db.query("select * from users where Email = ?", [user.email], (err, results) => {
             if (err) console.log('error found in query', err)
             if (!results.length) {
-              db.query('insert into users set name = ?, email = ?', [user.displayName, user.email], (err, userAdded) => {
+              db.query('insert into users set Name = ?, Email = ?', [user.displayName, user.email], (err, userAdded) => {
                 if (err) console.log('error in adding user ', err)
                   else {
                     console.log(`${user} was added`)
