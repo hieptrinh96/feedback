@@ -1,15 +1,16 @@
 import db from '../db/db.js'
-import XLSX from 'xlsx'
+import XLSX, { read } from 'xlsx'
 const showUser = (req, res) => {
   const user = req.user
   const listOfPersonnels = readExcelFile()
+  res.status(200).json(user)
   // if (user.email.includes('mil')) {
   //   db.query('update users set ')
   // }
 }
 
 const readExcelFile = () => {
-  const path = '../../server/references/Team List for Peer Feedback 2023Q2.xlsx'
+  const path = '../server/references/Team List for Peer Feedback 2023Q2.xlsx'
   const tabs = XLSX.readFile(path)
   const personnel = tabs.SheetNames[0]
   const sheet = tabs.Sheets[personnel]
@@ -19,6 +20,7 @@ const readExcelFile = () => {
   //   console.log(person)
   // }
   return listOfPersonnels
+  // console.log(listOfPersonnels)
 }
 
 const recordUserData = (req, res) => {
@@ -37,9 +39,8 @@ const recordUserData = (req, res) => {
   }
 }
 
-recordUserData()
-
 export {
   showUser,
-  readExcelFile
+  readExcelFile,
+  recordUserData
 }
