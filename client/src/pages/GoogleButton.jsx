@@ -5,7 +5,7 @@ import { logIn, logOut } from "../services/profileService";
 const GoogleButton = () => {
   return (
     <div>
-    <button onClick={() => logIn()}>Log in</button>
+        <button onClick={() => logIn()}>Log in</button>
     </div>
   );
 }
