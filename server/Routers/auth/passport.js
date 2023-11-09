@@ -13,7 +13,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
   }));
 
   router.get("/google/callback", passport.authenticate("google", {
-    successRedirect: 'http://localhost:3000/profile'
+    failureRedirect: '/login'
   }), (req, res) => {
     if (req.user) {
       // console.log("the use is", req); 
@@ -21,12 +21,13 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
         req.user.displayName,
         req.user.email
       ]
-      const googleAuthToken = jwt.sign({googleAuthToken: user}, process.env.TOKEN_SECRET, {expiresIn:86400000 })
+      const googleAuthToken = jwt.sign({googleAuthToken: user}, process.env.TOKEN_SECRET, {expiresIn: '1d' })
       res.cookie("googleAuthToken", googleAuthToken, {expires: new Date(Date.now() + 86400 * 1000), httpOnly: true})
       // res.redirect(`http://localhost:3000/profile?token=${googleAuthToken}`)
       res.redirect('http://localhost:3000/profile')
       // res.status(200).json(user)
     }
+    else res.redirect('/login')
   });
 
   router.get('/login/success', (req, res) => {
@@ -43,9 +44,11 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 
   router.get("/logout", (req, res) => {
     req.logout();
-    res.json({
-      logout: req.user
-    })
+    req.session.destroy()
+    res.clearCookie('connect.sid')
+    res.clearCookie('googleAuthToken')
+    res.status(200).json({message: 'Logged out Successfully'})
+    console.log('Checking if this route was hit')
   });
   
   passport.serializeUser((user, done) => {

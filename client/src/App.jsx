@@ -12,7 +12,8 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const userInfo = await fetchUser()
-      setUser(userInfo)
+      if (userInfo) setUser(userInfo)
+      else console.log('No user info returned')
     }
     fetchData()
   }, [])

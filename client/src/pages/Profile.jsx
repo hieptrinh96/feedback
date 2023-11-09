@@ -1,17 +1,12 @@
 import Teams from "./Teams";
+import {logOut} from '../services/profileService'
 const Profile = ({profile}) => {
+  let imageSource = profile ? profile.picture : 'No Profile yet'
   return (
     <div>
-      {
-        profile ?
-          profile.map(userInfo =>
-            <div key={userInfo.id}>
-              <h1> Hi {userInfo.name}!</h1>
-            </div>)
-          :
-          <div>Loading</div>
-      }
+      <button onClick={() => logOut()}>Log out</button>
       <Teams />
+      <img src={imageSource} alt="" />
     </div>
   );
 }

@@ -5,25 +5,51 @@ const fetchUser = async () => {
     const res = await fetch(`${base}/profile`, {
       credentials: "include"
     })
-    return res.json()
+    if (!res.ok) throw new Error (`HTTP error! status: ${res.status}`)
+    const data = await res.json()
+    return data
   } catch(err) {
-    console.log(err)
+    console.log('Error fetching users: ', err)
   }
 }
 
 const logIn = async () => {
+  const queryParams = new URLSearchParams({
+    client_id: process.env.REACT_APP_CLIENT_ID,
+    redirect_uri: `${base}/auth/google/callback`,
+    response_type: 'code',
+    scope: 'profile email',
+    prompt: 'select_account'
+  })
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${queryParams}`;
+  window.location.href = authUrl
+}
+
+const logOut = async () => {
+  console.log('Attempting to log out')
   try {
-    const res = await fetch(`${base}/auth/google`, {
-      clientId: process.env.REACT_APP_CLIENT_ID,
-      clientSecret: process.env.REACT_APP_CLIENT_SECRET
+    const response = await fetch(`${base}/auth/logout`, {
+      method: 'get',
+      credentials: 'include'
     })
-    return res.json()
-  } catch(err) {
-    console.log(err)
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+    const data = await response.json()
+    console.log('Response from logout:', data.message)
+    sessionStorage.removeItem('userToken')
+    document.cookie = 'googleAuthToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setTimeout(() => {
+      window.location.href = '/'
+    }, 1000)
+  } catch (err) {
+    console.error('Log out failed', err)
   }
 }
 
 export {
   fetchUser,
-  logIn
+  logIn,
+  logOut
 }
