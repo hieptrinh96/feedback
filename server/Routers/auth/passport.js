@@ -59,6 +59,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
     done(null, user);
   })
 
+
+  // whenever someone logs into their google account, they should be automatically added into the mysql server
+  // especially if they are a cohort member or an ATX employee
   passport.use(
     new GoogleStrategy(
       {
