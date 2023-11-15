@@ -24,7 +24,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
       const googleAuthToken = jwt.sign({googleAuthToken: user}, process.env.TOKEN_SECRET, {expiresIn: '1d' })
       res.cookie("googleAuthToken", googleAuthToken, {expires: new Date(Date.now() + 86400 * 1000), httpOnly: true})
       // res.redirect(`http://localhost:3000/profile?token=${googleAuthToken}`)
-      res.redirect('http://localhost:3000/profile')
+      res.redirect('http://localhost:3000')
       // res.status(200).json(user)
     }
     else res.redirect('/login')
