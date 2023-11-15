@@ -57,9 +57,16 @@ const addtoDB = () => {
     
   })
 }
-addtoDB()
+
+// const addToAdmins = (req, res) => {
+//   const user = req.user
+//   console.log('show me everything from the user', user)
+// }
+
 export {
   showUser,
   readExcelFile,
-  recordUserData
+  recordUserData,
+  addtoDB,
+  // addToAdmins
 }

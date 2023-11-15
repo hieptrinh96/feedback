@@ -68,10 +68,10 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
       },
       function (accessToken, refreshToken, user, cb) {
         if (user.email.includes('atx')) {
-          db.query('select * from admins where email = ?', [user.email], (err, results) => {
-            if (err) console.log('Error found in admins query', err)
+          db.query('select * from Admins where email = ?', [user.email], (err, results) => {
+            if (err) console.log('Error found in Admins query', err)
             if (!results.length) {
-              db.query('insert into admins set name = ?, email = ?', [user.displayName, user.email], (err, userAdded) => {
+              db.query('insert into Admins set full_name = ?, email = ?', [user.displayName, user.email], (err, userAdded) => {
                 if (err) console.log('Error found in adding user to admins table', err)
                 else {
                   console.log(`${userAdded} was added to the admins table`)
