@@ -48,8 +48,23 @@ const logOut = async () => {
   }
 }
 
+const checkLoginStatus = async () => {
+  try {
+    const response = await fetch(`${base}/auth/login/success`, {
+      credentials: 'include'
+    })
+    const data = await response.json()
+    if (response.ok && data.user) console.log('User is authenticated', data.user)
+    else console.log('User is not authenticated')
+    
+  } catch(err) {
+    console.error('An error occurred while checking the login status', err)
+  }
+}
+
 export {
   fetchUser,
   logIn,
-  logOut
+  logOut,
+  checkLoginStatus
 }

@@ -1,10 +1,18 @@
 import Teams from "./Teams";
 const Profile = ({profile}) => {
-  let imageSource = profile ? profile.picture : 'No Profile yet'
   return (
     <div>
-      <Teams />
-      <img src={imageSource} alt="" />
+      {
+        profile ? 
+        <>
+        <Teams /> 
+        </>
+        : 
+        <>
+        User isn't signed in
+        </>
+        
+      }
     </div>
   );
 }
