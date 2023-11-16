@@ -43,19 +43,20 @@ const recordUserData = (req, res) => {
   }
 }
 
-const addtoDB = () => {
-  const listOfPersonnels = readExcelFile()
-  listOfPersonnels.forEach(person => {
-    const sqlQuery = 'insert into users (Name, Cohort, Current_Team, SDU, Email) values (?, ?, ?, ?, ?)'
-    const example = 'select * from users'
-    const sqlValues = [person.Name, person.Cohort, person['Current Team'], person.SDU, person.Email]
-    console.log('sqlValues =', sqlValues)
-    db.query(sqlQuery, sqlValues, (error, results, fields) => {
-      if (error) console.error('There is an error', error)
-      else console.log(results)
+const teamChecker = (req, res) => {
+  const user = req.user
+  const userEmail = user.email
+  if (userEmail.includes('atx')) {
+    // display all members from ATX 
+  }
+  if (userEmail.includes('mil')) {
+    const query = `select * from users where email = ?`
+    const value = [userEmail]
+    db.query(query, value, (err, results) => {
+      if (err) console.error('There was an error', err)
+      else console.log('This is the result of the query', results)
     })
-    
-  })
+  }
 }
 
 // const addToAdmins = (req, res) => {
@@ -67,6 +68,6 @@ export {
   showUser,
   readExcelFile,
   recordUserData,
-  addtoDB,
+  teamChecker
   // addToAdmins
 }
