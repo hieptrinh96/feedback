@@ -13,6 +13,19 @@ const fetchUser = async () => {
   }
 }
 
+const fetchTeam = async () => {
+  try {
+    const res = await fetch(`${base}/profile/teamCheck`, {
+      credentials: 'include'
+    })
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    const data = await res.json()
+    return data
+  } catch(err) {
+    console.log('Error fetching teams', err)
+  }
+}
+
 const logIn = async () => {
   const queryParams = new URLSearchParams({
     client_id: process.env.REACT_APP_CLIENT_ID,
@@ -66,5 +79,6 @@ export {
   fetchUser,
   logIn,
   logOut,
-  checkLoginStatus
+  checkLoginStatus,
+  fetchTeam
 }
