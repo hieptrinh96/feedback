@@ -97,9 +97,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth2";
                   }
               })
             }
-            cb(null, user)
           })
         }
+        cb(null, user)
       }
     )
   );
