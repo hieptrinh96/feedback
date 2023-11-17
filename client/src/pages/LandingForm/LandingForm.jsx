@@ -11,7 +11,7 @@ const LandingForm = () => {
     e.preventDefault()
     // this is where you put the function to look at email
     const emailData = e.target.email.value
-    const data = await profileService.fetchTeam(emailData)
+    const data = await profileService.fetchUser(emailData)
     setEmail(data)
     navigate('/profile', {state: {data}})
   }

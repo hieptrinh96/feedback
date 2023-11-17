@@ -1,25 +1,29 @@
 const  base = `${process.env.REACT_APP_BACKEND_URL}`
 
-const fetchUser = async () => {
-  try {
-    const res = await fetch(`${base}/profile`, {
-      credentials: "include"
-    })
-    if (!res.ok) throw new Error (`HTTP error! status: ${res.status}`)
-    const data = await res.json()
-    return data
-  } catch(err) {
-    console.log('Error fetching users: ', err)
-  }
-}
+// const fetchUser = async () => {
+//   try {
+//     const res = await fetch(`${base}/profile`, {
+//       credentials: "include"
+//     })
+//     if (!res.ok) throw new Error (`HTTP error! status: ${res.status}`)
+//     const data = await res.json()
+//     return data
+//   } catch(err) {
+//     console.log('Error fetching users: ', err)
+//   }
+// }
 
-const fetchTeam = async () => {
+const fetchUser = async (email) => {
   try {
-    const res = await fetch(`${base}/profile/teamCheck`, {
+    const res = await fetch(`${base}/profile/userChecker`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email}),
       credentials: 'include'
     })
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-    console.log('Checking if this function is running')
     const data = await res.json()
     return data
   } catch(err) {
@@ -81,5 +85,5 @@ export {
   logIn,
   logOut,
   checkLoginStatus,
-  fetchTeam
+  // fetchTeam
 }
