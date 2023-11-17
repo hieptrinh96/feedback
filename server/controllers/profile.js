@@ -44,37 +44,47 @@ const recordUserData = (req, res) => {
 }
 
 const teamChecker = (req, res) => {
-  const user = req.user
-  const userEmail = user.email
-  // console.log('user =', user)
-  if (userEmail.includes('atx')) {
-    // display all members from ATX 
-  }
-  // if (userEmail.includes('mil')) {
+  const email = req.body.email
+  const query = `select * from users where email =?`
+  const value = [email]
+  db.query(query, value, (err, results) => {
+    if (err) console.error('There was an error', err)
     else {
-    const query = `select * from users where email = ?`
-    const value = [userEmail]
-    db.query(query, value, (err, results) => {
-      if (err) console.error('There was an error', err)
-      else {
-        console.log(results[0].SDU)
-        db.query(`select * from users where cohort =? and current_team =? and sdu =?`, [results[0].Cohort, results[0].Current_Team, results[0].SDU], (err, teammembers) => {
-          if (err) console.log('There was an error with the second query', err)
-          else {
-            console.log('Teammates found:', teammembers)
-            res.json(teammembers)
-          }
-        })
-      }
-    })
-  }
+      console.log('Show me the results', results)
+      res.json(results)
+    }
+  })
 }
 
 export {
   showUser,
   readExcelFile,
   recordUserData,
-  // personFinder,
   teamChecker
-  // addToAdmins
 }
+
+  // This uses (req, res)
+  // const user = req.user
+  // const userEmail = user.email
+  // // console.log('user =', user)
+  // if (userEmail.includes('atx')) {
+  //   // display all members from ATX 
+  // }
+  // // if (userEmail.includes('mil')) {
+  //   else {
+  //   const query = `select * from users where email = ?`
+  //   const value = [userEmail]
+  //   db.query(query, value, (err, results) => {
+  //     if (err) console.error('There was an error', err)
+  //     else {
+  //       console.log(results[0].SDU)
+  //       db.query(`select * from users where cohort =? and current_team =? and sdu =?`, [results[0].Cohort, results[0].Current_Team, results[0].SDU], (err, teammembers) => {
+  //         if (err) console.log('There was an error with the second query', err)
+  //         else {
+  //           console.log('Teammates found:', teammembers)
+  //           res.json(teammembers)
+  //         }
+  //       })
+  //     }
+  //   })
+  // }

@@ -5,6 +5,6 @@ import { checkAuth } from "../../controllers/auth.js";
 const router = Router()
 
 router.get('/', checkAuth, profileCtrl.showUser)
-router.get('/teamCheck', checkAuth, profileCtrl.teamChecker)
+router.post('/teamCheck', profileCtrl.teamChecker)
 
 export { router }

@@ -27,6 +27,8 @@ app.use(cors({
     credentials: true,  //Responding with this header to true means that the server allows cookies (or other user credentials) to be included on cross-origin requests. 
 }))
 
+app.use(express.json())
+
 app.use(passport.initialize())
 app.use(passport.session());
 
