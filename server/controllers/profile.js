@@ -43,7 +43,7 @@ const recordUserData = (req, res) => {
   }
 }
 
-const teamChecker = (req, res) => {
+const userChecker = (req, res) => {
   const email = req.body.email
   const query = `select * from users where email =?`
   const value = [email]
@@ -60,7 +60,8 @@ export {
   showUser,
   readExcelFile,
   recordUserData,
-  teamChecker
+  userChecker,
+  // teamChecker,
 }
 
   // This uses (req, res)
