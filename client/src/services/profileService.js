@@ -19,6 +19,7 @@ const fetchTeam = async () => {
       credentials: 'include'
     })
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+    console.log('Checking if this function is running')
     const data = await res.json()
     return data
   } catch(err) {
