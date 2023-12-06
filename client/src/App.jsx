@@ -4,6 +4,7 @@ import Profile from './pages/Profile.jsx';
 import LandingForm from './pages/LandingForm/LandingForm.jsx'
 // import Teams from './pages/Teams';
 // import Navbar from './pages/NavBar.jsx'
+import AddUser from './pages/AddUser.jsx'
 import {Routes, Route} from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import * as profileService from './services/profileService';
@@ -33,6 +34,10 @@ function App() {
         <Route 
           path='/profile'
           element={<Profile />}
+        />
+        <Route 
+          path='/addUser'
+          element={<AddUser />}
         />
         </Routes> 
     </div>
